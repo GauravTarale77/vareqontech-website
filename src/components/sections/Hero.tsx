@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { TypewriterText } from "@/components/ui/TypewriterText";
@@ -11,14 +12,15 @@ const Scene3D = dynamic(
 );
 
 export function Hero() {
+  const { ref, inView } = useInView({ threshold: 0.1 });
   return (
     <section
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden px-6"
     >
       {/* 3D background */}
-      <div className="absolute inset-0 -z-10">
-        <Scene3D />
+      <div ref={ref} className="absolute inset-0 -z-10">
+        {inView && <Scene3D />}
       </div>
 
       <div className="max-w-4xl mx-auto text-center flex flex-col items-center gap-6">

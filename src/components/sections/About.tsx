@@ -44,7 +44,7 @@ const reasons = [
 
 export function About() {
   return (
-    <section id="about" className="py-24 px-6">
+    <section id="about" className="py-16 px-6">
       <div className="max-w-6xl mx-auto">
         {/* Who we are */}
         <div className="grid md:grid-cols-2 gap-12 items-center mb-24">

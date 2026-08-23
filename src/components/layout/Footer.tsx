@@ -14,7 +14,7 @@ const socials = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-[var(--color-border)] mt-20">
+    <footer className="border-t border-[var(--color-border)] mt-10">
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid md:grid-cols-3 gap-12 mb-14">
           {/* Brand + socials */}
@@ -72,7 +72,7 @@ export function Footer() {
         </div>
 
         {/* Founders */}
-        <div className="border-t border-[var(--color-border)] pt-10 mb-10">
+        <div className="border-t border-[var(--color-border)] pt-7 mb-10">
           <p className="text-center text-sm font-semibold opacity-70 mb-6 tracking-wide uppercase">
             Meet the Founders
           </p>

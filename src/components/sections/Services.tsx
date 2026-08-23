@@ -4,11 +4,13 @@ import { useState } from "react";
 import dynamic from "next/dynamic";
 import * as Icons from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import { serviceCategories } from "@/data/services";
 import { SplineScene } from "@/components/ui/SplineScene";
 
 export function Services() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const { ref, inView } = useInView({ threshold: 0.15 });
 
   return (
     <section id="services" className="relative py-24 px-6">
@@ -19,10 +21,13 @@ export function Services() {
 
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Left: 3D gaze object */}
-          <div className="h-[350px] md:h-[500px]">
-            <SplineScene scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-              className="w-full h-full"
-            />
+          <div ref={ref} className="h-[350px] md:h-[500px]">
+            {inView && (
+              <SplineScene
+                scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+                className="w-full h-full"
+              />
+            )}
           </div>
 
           {/* Right: category list */}
@@ -36,8 +41,8 @@ export function Services() {
               return (
                 <div key={category.slug}>
                   <button
-                    onClick={() => setActiveIndex(index)}
-                    className={`w-full flex items-center gap-4 p-5 rounded-2xl border transition text-left ${
+                    onClick={() => setActiveIndex(activeIndex === index ? -1 : index)}
+                    className={`w-full flex items-center gap-4 p-5 rounded-2xl border cursor-pointer transition text-left ${
                       isActive
                         ? "border-[var(--color-accent-start)] bg-[var(--color-muted)]"
                         : "border-[var(--color-border)] hover:bg-[var(--color-muted)]"

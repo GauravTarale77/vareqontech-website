@@ -31,7 +31,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="py-24 px-6">
+    <section id="contact" className="py-16 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-14">
           <p className="text-sm font-semibold text-[var(--color-accent-start)] mb-3 tracking-wide uppercase">
@@ -125,7 +125,7 @@ export function Contact() {
             <button
               type="submit"
               disabled={status === "sending"}
-              className="flex items-center justify-center gap-2 px-7 py-3.5 rounded-full text-white font-semibold bg-gradient-to-r from-[var(--color-accent-start)] to-[var(--color-accent-end)] hover:opacity-90 transition disabled:opacity-60"
+              className="flex items-center justify-center gap-2 px-7 py-3.5 rounded-full text-white font-semibold bg-gradient-to-r from-[var(--color-accent-start)] to-[var(--color-accent-end)] hover:opacity-90 transition disabled:opacity-60 cursor-pointer"
             >
               {status === "sending" ? (
                 <>

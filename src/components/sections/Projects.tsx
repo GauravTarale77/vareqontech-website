@@ -43,7 +43,7 @@ export function Projects() {
   const doubled = [...testimonials, ...testimonials];
 
   return (
-    <section id="projects" className="py-24 overflow-hidden">
+    <section id="projects" className="py-16 overflow-hidden">
       <div className="max-w-6xl mx-auto px-6 text-center mb-14">
         <p className="text-sm font-semibold text-[var(--color-accent-start)] mb-3 tracking-wide uppercase">
           Client Love

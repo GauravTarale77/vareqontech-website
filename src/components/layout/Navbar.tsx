@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
@@ -9,13 +9,34 @@ import { ThemeToggle } from "@/components/ui/ThemeToggle";
 const navLinks = [
   { label: "Home", href: "#home" },
   { label: "Services", href: "#services" },
-  { label: "Projects", href: "#projects" },
   { label: "About", href: "#about" },
+  { label: "Projects", href: "#projects" },
   { label: "Contact", href: "#contact" },
 ];
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+
+  useEffect(() => {
+    const sections = navLinks
+      .map((link) => document.querySelector(link.href))
+      .filter(Boolean);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: "-45% 0px -45% 0px" } // triggers when section crosses the middle of the screen
+    );
+
+    sections.forEach((section) => section && observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-[var(--color-background)]/50 border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.05)]">
@@ -25,16 +46,23 @@ export function Navbar() {
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-8 cursor-pointer">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-sm font-medium opacity-80 hover:opacity-100 hover:text-[var(--color-accent-start)] transition"
-            >
-              {link.label}
-            </Link>
-          ))}
+                <nav className="hidden md:flex items-center gap-2 cursor-pointer">
+          {navLinks.map((link) => {
+            const isActive = activeSection === link.href.replace("#", "");
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                className={`text-sm font-medium px-3 py-1.5 rounded-lg border transition ${
+                  isActive
+                    ? "border-[var(--color-accent-start)] text-[var(--color-accent-start)] bg-[var(--color-muted)]"
+                    : "border-transparent opacity-80 hover:opacity-100 hover:text-[var(--color-accent-start)]"
+                }`}
+              >
+                {link.label}
+              </a>
+            );
+          })}
         </nav>
 
         <div className="hidden md:flex items-center gap-4">

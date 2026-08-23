@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense, lazy } from "react";
+import type { Application } from "@splinetool/runtime";
 
 const Spline = lazy(() => import("@splinetool/react-spline"));
 
@@ -10,6 +11,14 @@ interface SplineSceneProps {
 }
 
 export function SplineScene({ scene, className }: SplineSceneProps) {
+  function handleLoad(splineApp: Application) {
+    try {
+      splineApp.renderOnDemand = true;
+    } catch (err) {
+      console.warn("Could not enable renderOnDemand:", err);
+    }
+  }
+
   return (
     <Suspense
       fallback={
@@ -18,7 +27,7 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
         </div>
       }
     >
-      <Spline scene={scene} className={className} />
+      <Spline scene={scene} className={className} onLoad={handleLoad} />
     </Suspense>
   );
 }
