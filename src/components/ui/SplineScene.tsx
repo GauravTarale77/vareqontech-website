@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useRef, useEffect } from "react";
 import type { Application } from "@splinetool/runtime";
 
 const Spline = lazy(() => import("@splinetool/react-spline"));
@@ -8,16 +8,26 @@ const Spline = lazy(() => import("@splinetool/react-spline"));
 interface SplineSceneProps {
   scene: string;
   className?: string;
+  active?: boolean;
 }
 
-export function SplineScene({ scene, className }: SplineSceneProps) {
+export function SplineScene({ scene, className, active = true }: SplineSceneProps) {
+  const appRef = useRef<Application | null>(null);
+
   function handleLoad(splineApp: Application) {
+    appRef.current = splineApp;
     try {
       splineApp.renderOnDemand = true;
     } catch (err) {
       console.warn("Could not enable renderOnDemand:", err);
     }
+    if (!active) splineApp.stop();
   }
+
+  useEffect(() => {
+    if (!appRef.current) return;
+    active ? appRef.current.play() : appRef.current.stop();
+  }, [active]);
 
   return (
     <Suspense

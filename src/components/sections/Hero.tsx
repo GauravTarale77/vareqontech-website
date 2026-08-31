@@ -20,7 +20,7 @@ export function Hero() {
     >
       {/* 3D background */}
       <div ref={ref} className="absolute inset-0 -z-10">
-        {inView && <Scene3D />}
+        <Scene3D active={inView} />
       </div>
 
       <div className="max-w-4xl mx-auto text-center flex flex-col items-center gap-6">

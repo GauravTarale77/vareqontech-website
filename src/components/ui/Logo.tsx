@@ -2,26 +2,18 @@ import Image from "next/image";
 
 type LogoProps = {
   className?: string;
-  showText?: boolean;
 };
 
-export function Logo({ className = "", showText = true }: LogoProps) {
+export function Logo({ className = "" }: LogoProps) {
   return (
-    <div className={`flex items-center gap-2.5 ${className}`}>
+    <div className={`relative h-20 md:h-24 w-64 md:w-80 ${className}`}>
       <Image
-        src="/logo1.png"
-        alt="VareqonTech.ai logo"
-        width={34}
-        height={34}
+        src="/logo-full.png"
+        alt="VareqonTech.ai"
+        fill
         priority
+        className="object-contain object-left"
       />
-
-      {showText && (
-        <span className="font-heading font-light text-[22px] tracking-[0.15em] leading-none">
-          <span className="gradient-text font-semibold">VAREQONTECH</span>
-          <span className="text-[var(--color-foreground)] opacity-60">.ai</span>
-        </span>
-      )}
     </div>
   );
 }

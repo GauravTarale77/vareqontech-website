@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import * as Icons from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -9,8 +9,13 @@ import { serviceCategories } from "@/data/services";
 import { SplineScene } from "@/components/ui/SplineScene";
 
 export function Services() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(-1);
   const { ref, inView } = useInView({ threshold: 0.15 });
+  const [hasLoaded, setHasLoaded] = useState(false);
+
+  useEffect(() => {
+    if (inView) setHasLoaded(true);
+  }, [inView]);
 
   return (
     <section id="services" className="relative py-24 px-6">
@@ -22,10 +27,11 @@ export function Services() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Left: 3D gaze object */}
           <div ref={ref} className="h-[350px] md:h-[500px]">
-            {inView && (
+            {hasLoaded && (
               <SplineScene
                 scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
                 className="w-full h-full"
+                active={inView}
               />
             )}
           </div>

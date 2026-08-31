@@ -59,12 +59,13 @@ function Particles({ count = 80 }: { count?: number }) {
   );
 }
 
-export function Scene3D() {
+export function Scene3D({ active = true }: { active?: boolean }) {
   return (
     <Canvas
       camera={{ position: [0, 0, 6], fov: 50 }}
       dpr={[1, 1.5]}
       gl={{ alpha: true, antialias: true }}
+      frameloop={active ? "always" : "never"}
     >
       <ambientLight intensity={0.6} />
       <WireframeCore />
