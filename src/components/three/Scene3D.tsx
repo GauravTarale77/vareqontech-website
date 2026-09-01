@@ -4,21 +4,91 @@ import { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
-function WireframeCore() {
-  const meshRef = useRef<THREE.Mesh>(null);
+function NetworkGlobe() {
+  const groupRef = useRef<THREE.Group>(null);
+  const nodeCount = 90;
+  const radius = 1.8;
+
+  // Distribute nodes evenly on a sphere using the Fibonacci sphere method
+  const nodePositions = useMemo(() => {
+    const points: THREE.Vector3[] = [];
+    const goldenRatio = (1 + Math.sqrt(5)) / 2;
+    for (let i = 0; i < nodeCount; i++) {
+      const theta = (2 * Math.PI * i) / goldenRatio;
+      const phi = Math.acos(1 - (2 * (i + 0.5)) / nodeCount);
+      points.push(
+        new THREE.Vector3(
+          radius * Math.sin(phi) * Math.cos(theta),
+          radius * Math.sin(phi) * Math.sin(theta),
+          radius * Math.cos(phi)
+        )
+      );
+    }
+    return points;
+  }, []);
+
+  // Connect each node to its few nearest neighbors
+  const linePositions = useMemo(() => {
+    const positions: number[] = [];
+    const maxDistance = 0.75;
+
+    for (let i = 0; i < nodePositions.length; i++) {
+      for (let j = i + 1; j < nodePositions.length; j++) {
+        const dist = nodePositions[i].distanceTo(nodePositions[j]);
+        if (dist < maxDistance) {
+          positions.push(
+            nodePositions[i].x, nodePositions[i].y, nodePositions[i].z,
+            nodePositions[j].x, nodePositions[j].y, nodePositions[j].z
+          );
+        }
+      }
+    }
+    return new Float32Array(positions);
+  }, [nodePositions]);
+
+  const nodePositionsFlat = useMemo(() => {
+    const arr = new Float32Array(nodePositions.length * 3);
+    nodePositions.forEach((p, i) => {
+      arr[i * 3] = p.x;
+      arr[i * 3 + 1] = p.y;
+      arr[i * 3 + 2] = p.z;
+    });
+    return arr;
+  }, [nodePositions]);
 
   useFrame((_, delta) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x += delta * 0.15;
-      meshRef.current.rotation.y += delta * 0.22;
+    if (groupRef.current) {
+      groupRef.current.rotation.y += delta * 0.12;
+      groupRef.current.rotation.x = Math.sin(Date.now() * 0.0002) * 0.15;
     }
   });
 
   return (
-    <mesh ref={meshRef}>
-      <icosahedronGeometry args={[1.8, 1]} />
-      <meshBasicMaterial color="#6ba83a" wireframe />
-    </mesh>
+    <group ref={groupRef}>
+      {/* Connection lines */}
+      <lineSegments>
+        <bufferGeometry>
+          <bufferAttribute
+            attach="attributes-position"
+            args={[linePositions, 3]}
+            count={linePositions.length / 3}
+          />
+        </bufferGeometry>
+        <lineBasicMaterial color="#4a7a2a" transparent opacity={0.35} />
+      </lineSegments>
+
+      {/* Glowing nodes */}
+      <points>
+        <bufferGeometry>
+          <bufferAttribute
+            attach="attributes-position"
+            args={[nodePositionsFlat, 3]}
+            count={nodePositions.length}
+          />
+        </bufferGeometry>
+        <pointsMaterial size={0.06} color="#a8d977" sizeAttenuation />
+      </points>
+    </group>
   );
 }
 
@@ -68,7 +138,7 @@ export function Scene3D({ active = true }: { active?: boolean }) {
       frameloop={active ? "always" : "never"}
     >
       <ambientLight intensity={0.6} />
-      <WireframeCore />
+      <NetworkGlobe />
       <Particles />
     </Canvas>
   );

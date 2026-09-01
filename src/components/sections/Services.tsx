@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import * as Icons from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { serviceCategories } from "@/data/services";
 import { SplineScene } from "@/components/ui/SplineScene";
@@ -12,6 +12,7 @@ export function Services() {
   const [activeIndex, setActiveIndex] = useState(-1);
   const { ref, inView } = useInView({ threshold: 0.15 });
   const [hasLoaded, setHasLoaded] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     if (inView) setHasLoaded(true);
@@ -31,7 +32,7 @@ export function Services() {
               <SplineScene
                 scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
                 className="w-full h-full"
-                active={inView}
+                active={inView && !isTransitioning}
               />
             )}
           </div>
@@ -47,7 +48,11 @@ export function Services() {
               return (
                 <div key={category.slug}>
                   <button
-                    onClick={() => setActiveIndex(activeIndex === index ? -1 : index)}
+                    onClick={() => {
+                      setIsTransitioning(true);
+                      setActiveIndex(activeIndex === index ? -1 : index);
+                      setTimeout(() => setIsTransitioning(false), 350);
+                    }}
                     className={`w-full flex items-center gap-4 p-5 rounded-2xl border cursor-pointer transition text-left ${
                       isActive
                         ? "border-[var(--color-accent-start)] bg-[var(--color-muted)]"
@@ -57,30 +62,25 @@ export function Services() {
                     <Icon size={22} className="text-[var(--color-accent-start)]" />
                     <span className="font-semibold text-lg">{category.name}</span>
                   </button>
-
-                  <AnimatePresence>
-                    {isActive && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="overflow-hidden"
-                      >
-                        <div className="grid grid-cols-2 gap-3 pt-3 pb-1 pl-2">
-                          {category.subservices.map((sub) => (
-                            <a
-                              key={sub.slug}
-                              href={`/services/${category.slug}/${sub.slug}`}
-                              className="px-4 py-3 rounded-xl border border-[var(--color-border)] text-sm font-medium hover:border-[var(--color-accent-start)] hover:text-[var(--color-accent-start)] transition"
-                            >
-                              {sub.name}
-                            </a>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                    <div
+                    className={`grid transition-[grid-template-rows] duration-300 ease-out ${
+                      isActive ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="grid grid-cols-2 gap-3 pt-3 pb-1 pl-2">
+                        {category.subservices.map((sub) => (
+                          <a
+                            key={sub.slug}
+                            href={`/services/${category.slug}/${sub.slug}`}
+                            className="px-4 py-3 rounded-xl border border-[var(--color-border)] text-sm font-medium hover:border-[var(--color-accent-start)] hover:text-[var(--color-accent-start)] transition"
+                          >
+                            {sub.name}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               );
             })}
