@@ -13,7 +13,7 @@ export const testimonials: Testimonial[] = [
     review:
       "VareqonTech.ai completely transformed how customers find us online. The new site is fast, beautiful, and the AI chatbot handles half our customer questions automatically now.",
     rating: 5,
-    projectUrl: "https://vercel.com",
+    projectUrl: "/coming-soon",
   },
   {
     name: "Rahul Verma",
@@ -21,7 +21,7 @@ export const testimonials: Testimonial[] = [
     review:
       "The WhatsApp automation alone saved our team hours every week. Communication with the VareqonTech.ai team was smooth from start to finish.",
     rating: 5,
-    projectUrl: "https://vercel.com",
+    projectUrl: "/coming-soon",
   },
   {
     name: "Priya Nair",
@@ -29,7 +29,7 @@ export const testimonials: Testimonial[] = [
     review:
       "We didn't just get a website, we got a whole system — booking form, automated emails, and a design that actually matches our brand. Highly recommend.",
     rating: 4,
-    projectUrl: "https://vercel.com",
+    projectUrl: "/coming-soon",
   },
   {
     name: "Karan Mehta",
@@ -37,7 +37,7 @@ export const testimonials: Testimonial[] = [
     review:
       "Our online bookings doubled after launch. The AI calling agent handling appointment reminders was a feature we didn't even know we needed.",
     rating: 5,
-    projectUrl: "https://vercel.com",
+    projectUrl: "/coming-soon",
   },
   {
     name: "Sneha Kulkarni",
@@ -45,6 +45,6 @@ export const testimonials: Testimonial[] = [
     review:
       "Professional, fast, and genuinely creative. The e-commerce site they built handles our entire order flow without a hitch.",
     rating: 5,
-    projectUrl: "https://vercel.com",
+    projectUrl: "/coming-soon",
   },
 ];

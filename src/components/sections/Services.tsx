@@ -19,9 +19,9 @@ export function Services() {
   }, [inView]);
 
   return (
-    <section id="services" className="relative py-24 px-6">
+    <section id="services" className="relative py-16 px-6">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl md:text-5xl font-extrabold text-center mb-16">
+        <h2 className="text-3xl md:text-5xl font-extrabold text-center mb-10">
           What We <span className="text-[var(--color-accent-start)]">Build</span>
         </h2>
 

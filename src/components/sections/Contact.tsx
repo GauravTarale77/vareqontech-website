@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { canSubmit, getRemainingSeconds, markSubmitted } from "@/lib/rateLimiter";
 import emailjs from "@emailjs/browser";
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Send, Loader2, CheckCircle2 } from "lucide-react";
@@ -9,9 +10,18 @@ export function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formRef.current) return;
+
+    // Honeypot check — bots fill this hidden field, real users never do
+    const honeypot = (formRef.current.elements.namedItem("company_website") as HTMLInputElement)?.value;
+    if (honeypot) return;
+
+    if (!canSubmit("contact_form")) {
+      setStatus("error");
+      return;
+    }
 
     setStatus("sending");
 
@@ -23,6 +33,7 @@ export function Contact() {
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
       );
       setStatus("success");
+      markSubmitted("contact_form");
       formRef.current.reset();
     } catch (error) {
       console.error(error);
@@ -121,6 +132,15 @@ export function Contact() {
               placeholder="Tell us about your project..."
               className="px-4 py-3 rounded-xl bg-[var(--color-muted)] border border-[var(--color-border)] focus:border-[var(--color-accent-start)] outline-none transition resize-none"
             />
+            {/* Honeypot field — hidden from real users, catches bots */}
+            <input
+              type="text"
+              name="company_website"
+              tabIndex={-1}
+              autoComplete="off"
+              className="absolute -left-[9999px] w-px h-px opacity-0"
+              aria-hidden="true"
+            />
 
             <button
               type="submit"
@@ -147,7 +167,9 @@ export function Contact() {
 
             {status === "error" && (
               <p className="text-sm text-red-500">
-                Something went wrong. Please try again or email us directly.
+                {canSubmit("contact_form")
+                  ? "Something went wrong. Please try again or email us directly."
+                  : `Please wait ${getRemainingSeconds("contact_form")}s before sending another message.`}
               </p>
             )}
           </motion.form>

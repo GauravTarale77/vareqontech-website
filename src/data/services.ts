@@ -45,8 +45,8 @@ export const serviceCategories: ServiceCategory[] = [
           "Basic SEO setup",
         ],
         samples: [
-          { title: "Sample Portfolio 1", description: "Minimal personal portfolio layout.", url: "https://www.seanhalpin.xyz/" },
-          { title: "Sample Portfolio 2", description: "Creative-focused portfolio design.", url: "https://www.adhamdannaway.com/about" },
+          { title: "Sample Portfolio 1", description: "Minimal personal portfolio layout.", url: "/coming-soon" },
+          { title: "Sample Portfolio 2", description: "Creative-focused portfolio design.", url: "/coming-soon" },
         ],
       },
       {
@@ -62,7 +62,7 @@ export const serviceCategories: ServiceCategory[] = [
           "Basic SEO setup",
         ],
         samples: [
-          { title: "Sample Business Site", description: "Corporate multi-page business website.", url: "https://hub-hosting.com/" },
+          { title: "Sample Business Site", description: "Corporate multi-page business website.", url: "/coming-soon" },
         ],
       },
       {
@@ -83,7 +83,7 @@ export const serviceCategories: ServiceCategory[] = [
           "Mobile-optimized shopping experience",
         ],
         samples: [
-          { title: "Sample Store", description: "Full-featured product store demo.", url: "https://www.allbirds.com/?srsltid=AfmBOoo_AWUXWWHAAuh1PZdilnwT_HlJhSyt1ondWx6kAuWKEpbQEeY8" },
+          { title: "Sample Store", description: "Full-featured product store demo.", url: "/coming-soon" },
         ],
       },
       {
@@ -99,7 +99,7 @@ export const serviceCategories: ServiceCategory[] = [
           "Ongoing support available",
         ],
         samples: [
-          { title: "Sample SaaS Dashboard", description: "Example of a SaaS product dashboard.", url: "https://slack.com/intl/en-in/" },
+          { title: "Sample SaaS Dashboard", description: "Example of a SaaS product dashboard.", url: "/coming-soon" },
         ],
       },
       {
@@ -115,7 +115,7 @@ export const serviceCategories: ServiceCategory[] = [
           "1 year free service & support",
         ],
         samples: [
-          { title: "Sample Landing Page", description: "High-conversion landing page layout.", url: "https://www.peachweb.io/" },
+          { title: "Sample Landing Page", description: "High-conversion landing page layout.", url: "/coming-soon" },
         ],
       },
     ],
@@ -137,7 +137,7 @@ export const serviceCategories: ServiceCategory[] = [
           "1 year free support",
         ],
         samples: [
-          { title: "Sample Chatbot Demo", description: "Example chatbot integration.", url: "https://vercel.com" },
+          { title: "Sample Chatbot Demo", description: "Example chatbot integration.", url: "/coming-soon" },
         ],
       },
       {
@@ -151,7 +151,7 @@ export const serviceCategories: ServiceCategory[] = [
           "Multi-platform support (site/WhatsApp)",
         ],
         samples: [
-          { title: "Sample Support Bot", description: "Example customer support automation.", url: "https://vercel.com" },
+          { title: "Sample Support Bot", description: "Example customer support automation.", url: "/coming-soon" },
         ],
       },
       {
@@ -165,7 +165,7 @@ export const serviceCategories: ServiceCategory[] = [
           "Reduces manual work significantly",
         ],
         samples: [
-          { title: "Sample Automation Flow", description: "Example of an automated workflow.", url: "https://vercel.com" },
+          { title: "Sample Automation Flow", description: "Example of an automated workflow.", url: "/coming-soon" },
         ],
       },
       {
@@ -179,7 +179,7 @@ export const serviceCategories: ServiceCategory[] = [
           "Custom call scripts",
         ],
         samples: [
-          { title: "Sample Voice Agent", description: "Example AI calling agent setup.", url: "https://vercel.com" },
+          { title: "Sample Voice Agent", description: "Example AI calling agent setup.", url: "/coming-soon" },
         ],
       },
       {
@@ -193,7 +193,7 @@ export const serviceCategories: ServiceCategory[] = [
           "Ideal for internal tools or support",
         ],
         samples: [
-          { title: "Sample RAG App", description: "Example of a document-based AI assistant.", url: "https://vercel.com" },
+          { title: "Sample RAG App", description: "Example of a document-based AI assistant.", url: "/coming-soon" },
         ],
       },
     ],
@@ -214,7 +214,7 @@ export const serviceCategories: ServiceCategory[] = [
           "Order/booking confirmations",
         ],
         samples: [
-          { title: "Sample WhatsApp Flow", description: "Example automated WhatsApp flow.", url: "https://vercel.com" },
+          { title: "Sample WhatsApp Flow", description: "Example automated WhatsApp flow.", url: "/coming-soon" },
         ],
       },
       {
@@ -228,7 +228,7 @@ export const serviceCategories: ServiceCategory[] = [
           "Integration with your website forms",
         ],
         samples: [
-          { title: "Sample Email Flow", description: "Example automated email sequence.", url: "https://vercel.com" },
+          { title: "Sample Email Flow", description: "Example automated email sequence.", url: "/coming-soon" },
         ],
       },
       {
@@ -242,7 +242,7 @@ export const serviceCategories: ServiceCategory[] = [
           "Works with tools you already use",
         ],
         samples: [
-          { title: "Sample Workflow", description: "Example business workflow automation.", url: "https://vercel.com" },
+          { title: "Sample Workflow", description: "Example business workflow automation.", url: "/coming-soon" },
         ],
       },
     ],
@@ -263,7 +263,7 @@ export const serviceCategories: ServiceCategory[] = [
           "Delivered in Figma",
         ],
         samples: [
-          { title: "Sample Web Design", description: "Example website UI design.", url: "https://vercel.com" },
+          { title: "Sample Web Design", description: "Example website UI design.", url: "/coming-soon" },
         ],
       },
       {
@@ -277,7 +277,7 @@ export const serviceCategories: ServiceCategory[] = [
           "Delivered in Figma",
         ],
         samples: [
-          { title: "Sample App Design", description: "Example mobile app UI design.", url: "https://vercel.com" },
+          { title: "Sample App Design", description: "Example mobile app UI design.", url: "/coming-soon" },
         ],
       },
       {
@@ -291,7 +291,7 @@ export const serviceCategories: ServiceCategory[] = [
           "Brand guideline document",
         ],
         samples: [
-          { title: "Sample Brand Kit", description: "Example brand identity package.", url: "https://vercel.com" },
+          { title: "Sample Brand Kit", description: "Example brand identity package.", url: "/coming-soon" },
         ],
       },
     ],
@@ -312,7 +312,7 @@ export const serviceCategories: ServiceCategory[] = [
           "Monthly performance review",
         ],
         samples: [
-          { title: "Sample Strategy Deck", description: "Example content strategy plan.", url: "https://vercel.com" },
+          { title: "Sample Strategy Deck", description: "Example content strategy plan.", url: "/coming-soon" },
         ],
       },
       {
@@ -326,7 +326,7 @@ export const serviceCategories: ServiceCategory[] = [
           "Actionable growth recommendations",
         ],
         samples: [
-          { title: "Sample Audit Report", description: "Example SMO audit report.", url: "https://vercel.com" },
+          { title: "Sample Audit Report", description: "Example SMO audit report.", url: "/coming-soon" },
         ],
       },
       {
@@ -340,7 +340,7 @@ export const serviceCategories: ServiceCategory[] = [
           "Monthly performance reporting",
         ],
         samples: [
-          { title: "Sample Ad Campaign", description: "Example ad campaign results.", url: "https://vercel.com" },
+          { title: "Sample Ad Campaign", description: "Example ad campaign results.", url: "/coming-soon" },
         ],
       },
     ],

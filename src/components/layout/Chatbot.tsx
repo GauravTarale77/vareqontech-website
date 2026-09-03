@@ -5,8 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, Bot } from "lucide-react";
 import emailjs from "@emailjs/browser";
 import { chatFlow, type ChatOption } from "@/data/chatbotFlow";
+import { canSubmit, markSubmitted } from "@/lib/rateLimiter";
 
-const WHATSAPP_NUMBER = "917720081364";
+const WHATSAPP_NUMBER = "919225313745";
 
 type Message = {
   sender: "bot" | "user";
@@ -120,8 +121,13 @@ export function Chatbot() {
   };
 
   const submitPhone = () => {
-    const value = phoneInput.trim();
+  const value = phoneInput.trim();
     if (!value) return;
+    if (!canSubmit("chatbot_lead")) {
+      botSay("Looks like you already sent us your details recently — our team already has them! We'll be in touch soon.");
+      setLeadStage("done");
+      return;
+    }
     setMessages((prev) => [...prev, { sender: "user", text: value }]);
     const finalLead = { ...leadData, phone: value };
     setLeadData(finalLead);
@@ -132,6 +138,7 @@ export function Chatbot() {
       setLeadStage("done");
       botSay(`Thank you for your interest, ${finalLead.name}! 🎉 Our team will contact you within 24 hours.`);
       sendLeadNotification(finalLead);
+      markSubmitted("chatbot_lead");
     }, 200);
   };
 

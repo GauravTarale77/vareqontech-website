@@ -1,23 +1,28 @@
 "use client";
 
+import dynamic from "next/dynamic";
+import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { TypewriterText } from "@/components/ui/TypewriterText";
-import { VideoBackground } from "@/components/ui/VideoBackground";
+
+const Scene3D = dynamic(
+  () => import("@/components/three/Scene3D").then((m) => m.Scene3D),
+  { ssr: false }
+);
 
 export function Hero() {
+  const { ref, inView } = useInView({ threshold: 0.1 });
+
   return (
     <section
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden px-6"
     >
-      {/* Looping background video */}
-      <div className="absolute inset-0">
-        <VideoBackground />
+      {/* 3D network globe + drifting stars */}
+      <div ref={ref} className="absolute inset-0">
+        <Scene3D active={inView} />
       </div>
-
-      {/* Dark overlay so text stays readable over the video */}
-      <div className="absolute inset-0 bg-[var(--color-background)]/50 pointer-events-none" />
 
       <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center gap-6">
         <motion.h1

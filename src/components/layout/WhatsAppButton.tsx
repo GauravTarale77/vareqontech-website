@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-const WHATSAPP_NUMBER = "917720081364"; 
+const WHATSAPP_NUMBER = "919225313745"; 
 const DEFAULT_MESSAGE = "Hi! I'm interested in your services at VareqonTech.ai";
 
 export function WhatsAppButton() {
