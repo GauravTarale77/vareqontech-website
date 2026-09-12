@@ -54,7 +54,7 @@ export function Footer() {
             <p className="font-semibold mb-1">Contact</p>
             <div className="flex items-center gap-2 text-sm opacity-65">
               <Mail size={15} className="text-[var(--color-accent-start)]" />
-              hello@VareqonTech.ai
+              contact@vareqontech.ai
             </div>
             <div className="flex items-center gap-2 text-sm opacity-65">
               <Phone size={15} className="text-[var(--color-accent-start)]" />
