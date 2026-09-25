@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://vareqontech.ai/sitemap.xml",
+    sitemap: "https://www.vareqontech.ai/sitemap.xml",
   };
 }
