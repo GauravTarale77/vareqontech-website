@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { serviceCategories } from "@/data/services";
 
-const BASE_URL = "https://vareqontech.ai";
+const BASE_URL = "https://www.vareqontech.ai";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
