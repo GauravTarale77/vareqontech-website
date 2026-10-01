@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, ExternalLink, Check } from "lucide-react";
 import { serviceCategories } from "@/data/services";
+import { FooterMinimal } from "@/components/layout/FooterMinimal";
 
 export function generateStaticParams() {
   return serviceCategories.flatMap((cat) =>
@@ -27,6 +28,7 @@ export default async function SubServicePage({
   }
 
   return (
+    <>
     <main className="max-w-6xl mx-auto px-6 py-16">
       {/* Back link */}
       <Link
@@ -151,5 +153,7 @@ export default async function SubServicePage({
         </Link>
       </div>
     </main>
+    <FooterMinimal />
+    </>
   );
 }

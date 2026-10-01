@@ -51,7 +51,7 @@ export function Hero() {
           className="flex flex-col sm:flex-row items-center gap-4 mt-4"
         >
           <a
-            href="#contact"
+            href="/#contact"
             className="group flex items-center gap-2 px-7 py-3.5 rounded-full text-white font-semibold bg-gradient-to-r from-[var(--color-accent-start)] to-[var(--color-accent-end)] hover:opacity-90 transition"
           >
             Start Your Project
@@ -61,7 +61,7 @@ export function Hero() {
             />
           </a>
           <a
-            href="#services"
+            href="/#services"
             className="px-7 py-3.5 rounded-full font-semibold border border-[var(--color-border)] hover:bg-[var(--color-muted)] transition"
           >
             Explore Services

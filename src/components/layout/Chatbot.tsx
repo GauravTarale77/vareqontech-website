@@ -2,10 +2,11 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Bot } from "lucide-react";
+import { X, Send, Bot } from "lucide-react";
 import emailjs from "@emailjs/browser";
 import { chatFlow, type ChatOption } from "@/data/chatbotFlow";
 import { canSubmit, markSubmitted } from "@/lib/rateLimiter";
+import { validateName, validatePhone } from "@/lib/validators";
 
 const WHATSAPP_NUMBER = "919225313745";
 
@@ -58,7 +59,9 @@ export function Chatbot() {
 
   const startLeadCapture = () => {
     setLeadStage("name");
-    botSay("Before I connect you with our team — what's your name?");
+    botSay(
+      "Before I connect you with our team — what's your name? (By continuing, you agree to our Privacy Policy, available in the footer below.)"
+    );
   };
 
   const handleOptionClick = (option: ChatOption) => {
@@ -100,6 +103,12 @@ export function Chatbot() {
   const submitName = () => {
     const value = nameInput.trim();
     if (!value) return;
+    const nameError = validateName(value);
+    if (nameError) {
+      setNameInput("");
+      botSay(nameError, 400);
+      return;
+    }
     setMessages((prev) => [...prev, { sender: "user", text: value }]);
     setLeadData((prev) => ({ ...prev, name: value }));
     setNameInput("");
@@ -123,6 +132,12 @@ export function Chatbot() {
   const submitPhone = () => {
   const value = phoneInput.trim();
     if (!value) return;
+    const phoneError = validatePhone(value);
+    if (phoneError) {
+      setPhoneInput("");
+      botSay(phoneError, 400);
+      return;
+    }
     if (!canSubmit("chatbot_lead")) {
       botSay("Looks like you already sent us your details recently — our team already has them! We'll be in touch soon.");
       setLeadStage("done");
@@ -183,7 +198,7 @@ export function Chatbot() {
         whileTap={{ scale: 0.95 }}
         className="fixed bottom-24 right-6 z-50 w-14 h-14 rounded-full bg-gradient-to-r from-[var(--color-accent-start)] to-[var(--color-accent-end)] flex items-center justify-center shadow-lg shadow-black/20 text-white cursor-pointer"
       >
-        {isOpen ? <X size={24} /> : <MessageCircle size={24} />}
+        {isOpen ? <X size={24} /> : <Bot size={35} />}
       </motion.button>
 
       <AnimatePresence>

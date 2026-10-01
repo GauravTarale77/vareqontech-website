@@ -1,22 +1,51 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { canSubmit, getRemainingSeconds, markSubmitted } from "@/lib/rateLimiter";
 import emailjs from "@emailjs/browser";
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Send, Loader2, CheckCircle2 } from "lucide-react";
+import { canSubmit, getRemainingSeconds, markSubmitted } from "@/lib/rateLimiter";
+import { validateName, validateEmail, validateMessage } from "@/lib/validators";
+
+type FieldErrors = { name?: string; email?: string; message?: string; consent?: string };
+
+const inputClass =
+  "w-full px-4 py-3 rounded-xl bg-[var(--color-muted)] border border-[var(--color-border)] focus:border-[var(--color-accent-start)] outline-none transition";
+
+function FieldError({ message }: { message?: string }) {
+  if (!message) return null;
+  return <p className="text-xs text-red-500 mt-1.5">{message}</p>;
+}
 
 export function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [errors, setErrors] = useState<FieldErrors>({});
 
-    const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formRef.current) return;
 
-    // Honeypot check — bots fill this hidden field, real users never do
-    const honeypot = (formRef.current.elements.namedItem("company_website") as HTMLInputElement)?.value;
-    if (honeypot) return;
+    const form = formRef.current;
+    const data = new FormData(form);
+
+    // Honeypot — bots fill this hidden field, real users never do
+    if (data.get("company_website")) return;
+
+    const newErrors: FieldErrors = {};
+    const nameError = validateName(String(data.get("name") || ""));
+    const emailError = validateEmail(String(data.get("email") || ""));
+    const messageError = validateMessage(String(data.get("message") || ""));
+    if (nameError) newErrors.name = nameError;
+    if (emailError) newErrors.email = emailError;
+    if (messageError) newErrors.message = messageError;
+    if (!data.get("consent")) newErrors.consent = "Please confirm you agree to our Privacy Policy.";
+
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) {
+      setStatus("idle");
+      return;
+    }
 
     if (!canSubmit("contact_form")) {
       setStatus("error");
@@ -29,12 +58,12 @@ export function Contact() {
       await emailjs.sendForm(
         process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
         process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
-        formRef.current,
+        form,
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
       );
       setStatus("success");
       markSubmitted("contact_form");
-      formRef.current.reset();
+      form.reset();
     } catch (error) {
       console.error(error);
       setStatus("error");
@@ -57,7 +86,6 @@ export function Contact() {
         </div>
 
         <div className="grid md:grid-cols-5 gap-10">
-          {/* Contact info */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -71,7 +99,7 @@ export function Contact() {
               </div>
               <div>
                 <p className="font-semibold">Email</p>
-                <p className="text-sm opacity-65">contact@VareqonTech.ai</p>
+                <p className="text-sm opacity-65">contact@vareqontech.ai</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
@@ -80,8 +108,8 @@ export function Contact() {
               </div>
               <div>
                 <p className="font-semibold">Phone / WhatsApp</p>
-                <p className="text-sm opacity-65">+91 7378795626</p>
-                <p className="text-sm opacity-65">+91 7720081364</p>
+                <p className="text-sm opacity-65">+91 73787 95626</p>
+                <p className="text-sm opacity-65">+91 77200 81364</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
@@ -95,7 +123,6 @@ export function Contact() {
             </div>
           </motion.div>
 
-          {/* Form */}
           <motion.form
             ref={formRef}
             onSubmit={handleSubmit}
@@ -106,32 +133,33 @@ export function Contact() {
             className="md:col-span-3 flex flex-col gap-4"
           >
             <div className="grid sm:grid-cols-2 gap-4">
-              <input
-                name="name"
-                required
-                placeholder="Your Name"
-                className="px-4 py-3 rounded-xl bg-[var(--color-muted)] border border-[var(--color-border)] focus:border-[var(--color-accent-start)] outline-none transition"
-              />
-              <input
-                name="email"
-                type="email"
-                required
-                placeholder="Your Email"
-                className="px-4 py-3 rounded-xl bg-[var(--color-muted)] border border-[var(--color-border)] focus:border-[var(--color-accent-start)] outline-none transition"
-              />
+              <div>
+                <input name="name" required placeholder="Your Name" className={inputClass} />
+                <FieldError message={errors.name} />
+              </div>
+              <div>
+                <input name="email" type="email" required placeholder="Your Email" className={inputClass} />
+                <FieldError message={errors.email} />
+              </div>
             </div>
+
             <input
               name="subject"
               placeholder="Subject (e.g. AI Chatbot for my store)"
-              className="px-4 py-3 rounded-xl bg-[var(--color-muted)] border border-[var(--color-border)] focus:border-[var(--color-accent-start)] outline-none transition"
+              className={inputClass}
             />
-            <textarea
-              name="message"
-              required
-              rows={5}
-              placeholder="Tell us about your project..."
-              className="px-4 py-3 rounded-xl bg-[var(--color-muted)] border border-[var(--color-border)] focus:border-[var(--color-accent-start)] outline-none transition resize-none"
-            />
+
+            <div>
+              <textarea
+                name="message"
+                required
+                rows={5}
+                placeholder="Tell us about your project..."
+                className={`${inputClass} resize-none`}
+              />
+              <FieldError message={errors.message} />
+            </div>
+
             {/* Honeypot field — hidden from real users, catches bots */}
             <input
               type="text"
@@ -142,6 +170,22 @@ export function Contact() {
               aria-hidden="true"
             />
 
+            <label className="flex items-start gap-2.5 text-xs opacity-70">
+              <input
+                type="checkbox"
+                name="consent"
+                className="mt-0.5 accent-[var(--color-accent-start)]"
+              />
+              <span>
+                I agree to the{" "}
+                <a href="/privacy-policy" className="text-[var(--color-accent-start)] underline">
+                  Privacy Policy
+                </a>{" "}
+                and consent to VareqonTech.ai contacting me about my inquiry.
+              </span>
+            </label>
+            <FieldError message={errors.consent} />
+            
             <button
               type="submit"
               disabled={status === "sending"}

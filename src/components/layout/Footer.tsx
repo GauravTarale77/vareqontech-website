@@ -6,10 +6,10 @@ import { Logo } from "@/components/ui/Logo";
 import { founders } from "@/data/founders";
 
 const socials = [
-  { icon: FaInstagram, href: "https://instagram.com", label: "Instagram" },
-  { icon: FaLinkedinIn, href: "https://linkedin.com", label: "LinkedIn" },
-  { icon: FaXTwitter, href: "https://twitter.com", label: "Twitter" },
-  { icon: FaFacebookF, href: "https://facebook.com", label: "Facebook" },
+  { icon: FaInstagram, href: "https://www.instagram.com/vareqon_tech.ai/", label: "Instagram" },
+  { icon: FaLinkedinIn, href: "https://www.linkedin.com/company/146641678", label: "LinkedIn" },
+  { icon: FaXTwitter, href: "https://x.com/VareqonTech", label: "Twitter" },
+  { icon: FaFacebookF, href: "https://www.facebook.com/profile.php?id=61594321725462", label: "Facebook" },
 ];
 
 export function Footer() {
@@ -43,10 +43,10 @@ export function Footer() {
           {/* Quick links */}
           <div className="flex flex-col gap-3">
             <p className="font-semibold mb-1">Quick Links</p>
-            <a href="#home" className="text-sm opacity-65 hover:opacity-100 hover:text-[var(--color-accent-start)] transition w-fit">Home</a>
-            <a href="#services" className="text-sm opacity-65 hover:opacity-100 hover:text-[var(--color-accent-start)] transition w-fit">Services</a>
-            <a href="#about" className="text-sm opacity-65 hover:opacity-100 hover:text-[var(--color-accent-start)] transition w-fit">About</a>
-            <a href="#contact" className="text-sm opacity-65 hover:opacity-100 hover:text-[var(--color-accent-start)] transition w-fit">Contact</a>
+            <a href="/#home" className="text-sm opacity-65 hover:opacity-100 hover:text-[var(--color-accent-start)] transition w-fit">Home</a>
+            <a href="/#services" className="text-sm opacity-65 hover:opacity-100 hover:text-[var(--color-accent-start)] transition w-fit">Services</a>
+            <a href="/#about" className="text-sm opacity-65 hover:opacity-100 hover:text-[var(--color-accent-start)] transition w-fit">About</a>
+            <a href="/#contact" className="text-sm opacity-65 hover:opacity-100 hover:text-[var(--color-accent-start)] transition w-fit">Contact</a>
           </div>
 
           {/* Contact info */}
@@ -58,11 +58,11 @@ export function Footer() {
             </div>
             <div className="flex items-center gap-2 text-sm opacity-65">
               <Phone size={15} className="text-[var(--color-accent-start)]" />
-              +91 7378795626
+              +91 73787 95626
             </div>
             <div className="flex items-center gap-2 text-sm opacity-65">
               <Phone size={15} className="text-[var(--color-accent-start)]" />
-              +91 7720081364
+              +91 77200 81364
             </div>
             <div className="flex items-center gap-2 text-sm opacity-65">
               <MapPin size={15} className="text-[var(--color-accent-start)]" />
@@ -103,10 +103,18 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-[var(--color-border)] pt-6 text-center">
+        <div className="border-t border-[var(--color-border)] pt-6 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-center">
           <p className="text-sm opacity-55">
             © {new Date().getFullYear()} VareqonTech.ai. All rights reserved.
           </p>
+          <span className="hidden sm:inline opacity-30">|</span>
+          <Link href="/privacy-policy" className="text-sm opacity-55 hover:opacity-100 hover:text-[var(--color-accent-start)] transition">
+            Privacy Policy
+          </Link>
+          <span className="hidden sm:inline opacity-30">|</span>
+          <Link href="/terms" className="text-sm opacity-55 hover:opacity-100 hover:text-[var(--color-accent-start)] transition">
+            Terms &amp; Conditions
+          </Link>
         </div>
       </div>
     </footer>

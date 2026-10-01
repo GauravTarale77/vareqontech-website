@@ -7,20 +7,22 @@ import { Logo } from "@/components/ui/Logo";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "Services", href: "#services" },
-  { label: "About", href: "#about" },
-  { label: "Projects", href: "#projects" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/#home" },
+  { label: "Services", href: "/#services" },
+  { label: "About", href: "/#about" },
+  { label: "Projects", href: "/#projects" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
 
-  useEffect(() => {
+    useEffect(() => {
+    if (typeof window === "undefined" || window.location.pathname !== "/") return;
+
     const sections = navLinks
-      .map((link) => document.querySelector(link.href))
+      .map((link) => document.querySelector(link.href.replace("/#", "#")))
       .filter(Boolean);
 
     const observer = new IntersectionObserver(
@@ -41,14 +43,14 @@ export function Navbar() {
   return (
     <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-[var(--color-background)]/50 border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.05)]">
       <div className="max-w-7xl mx-auto px-6 h-18 flex items-center justify-between py-3 ">
-        <Link href="#home">
+        <Link href="/#home">
           <Logo />
         </Link>
 
         {/* Desktop nav */}
                 <nav className="hidden md:flex items-center gap-2 cursor-pointer">
           {navLinks.map((link) => {
-            const isActive = activeSection === link.href.replace("#", "");
+            const isActive = activeSection === link.href.replace("/#", "");
             return (
               <a
                 key={link.href}
@@ -68,7 +70,7 @@ export function Navbar() {
         <div className="hidden md:flex items-center gap-4">
           <ThemeToggle />
           <a
-            href="#contact"
+            href="/#contact"
             className="px-5 py-2 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-[var(--color-accent-start)] to-[var(--color-accent-end)] hover:opacity-90 transition"
           >
             Get a Quote
@@ -101,7 +103,7 @@ export function Navbar() {
           <div className="flex items-center justify-between pt-2">
             <ThemeToggle />
             <a
-              href="#contact"
+              href="/#contact"
               onClick={() => setIsOpen(false)}
               className="px-5 py-2 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-[var(--color-accent-start)] to-[var(--color-accent-end)]"
             >
